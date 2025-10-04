@@ -5,7 +5,14 @@
   "private": true,
   "scripts": {
     "build": "node build.js",
+    "build:chrome": "cross-env TARGET=chrome node build.js && cross-env TARGET=chrome node scripts/build-manifest.mjs",
+    "build:firefox": "cross-env TARGET=firefox node build.js && cross-env TARGET=firefox node scripts/build-manifest.mjs",
+    "build:safari": "cross-env TARGET=safari node build.js && cross-env TARGET=safari node scripts/build-manifest.mjs",
+    "build:all": "npm run build:chrome && npm run build:firefox && npm run build:safari",
     "watch": "node build.js --watch",
+    "watch:chrome": "cross-env TARGET=chrome node build.js --watch",
+    "watch:firefox": "cross-env TARGET=firefox node build.js --watch",
+    "watch:safari": "cross-env TARGET=safari node build.js --watch",
     "clean": "rm -rf dist",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -15,6 +22,7 @@
   "devDependencies": {
     "@types/webextension-polyfill": "^0.10.7",
     "@vitest/ui": "^3.2.4",
+    "cross-env": "^10.1.0",
     "esbuild": "^0.20.0",
     "happy-dom": "^19.0.2",
     "typescript": "^5.3.3",

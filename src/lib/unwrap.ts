@@ -20,8 +20,16 @@ const UNWRAP_DOMAINS = [
 ];
 
 /**
- * Unwrap a URL by following redirects with hop and timeout limits.
- * Uses HEAD request first, falls back to GET if needed.
+ * Unwrap a URL by following redirects with hop and timeout limits
+ *
+ * Resolves shortlinks and resolver URLs (like DOI.org, bit.ly) to their
+ * final destination. Uses HEAD requests for efficiency, falling back to
+ * GET if the server doesn't support HEAD.
+ *
+ * @param url - URL to unwrap
+ * @param maxHops - Maximum number of redirects to follow (default: 10)
+ * @param timeout - Timeout per request in milliseconds (default: 5000)
+ * @returns Unwrap result with final URL, hop count, and timeout flag
  */
 export async function unwrapUrl(
   url: string,
@@ -32,9 +40,14 @@ export async function unwrapUrl(
   let hops = 0;
   let timedOut = false;
 
+  /**
+   * Check if a URL should be unwrapped
+   * Only unwraps URLs from known shortlink/resolver domains
+   */
   const shouldUnwrap = (urlStr: string): boolean => {
     try {
       const parsed = new URL(urlStr);
+      // Check if hostname matches or is subdomain of unwrap domain
       return UNWRAP_DOMAINS.some(domain =>
         parsed.hostname === domain || parsed.hostname.endsWith('.' + domain)
       );
@@ -43,20 +56,22 @@ export async function unwrapUrl(
     }
   };
 
+  // Follow redirects until we hit a non-unwrap domain or max hops
   while (shouldUnwrap(currentUrl) && hops < maxHops) {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), timeout);
 
       try {
-        // Try HEAD first for efficiency
+        // Try HEAD first for efficiency (doesn't download response body)
         let response = await fetch(currentUrl, {
           method: 'HEAD',
-          redirect: 'manual',
+          redirect: 'manual', // Handle redirects manually to count hops
           signal: controller.signal,
         });
 
-        // If HEAD fails or doesn't give redirect, try GET
+        // If HEAD fails (405 Method Not Allowed) or client error, try GET
+        // Some servers don't support HEAD requests
         if (response.status === 405 || (response.status >= 400 && response.status < 500)) {
           response = await fetch(currentUrl, {
             method: 'GET',
@@ -67,18 +82,18 @@ export async function unwrapUrl(
 
         clearTimeout(timeoutId);
 
-        // Check for redirect
+        // Check for redirect response (3xx status codes)
         if (response.status >= 300 && response.status < 400) {
           const location = response.headers.get('Location');
           if (location) {
-            // Resolve relative URLs
+            // Resolve relative URLs against current URL as base
             currentUrl = new URL(location, currentUrl).href;
             hops++;
             continue;
           }
         }
 
-        // No more redirects
+        // No more redirects, we've reached the final URL
         break;
       } catch (error: any) {
         clearTimeout(timeoutId);
@@ -86,10 +101,11 @@ export async function unwrapUrl(
           timedOut = true;
           break;
         }
-        // On fetch error, stop unwrapping
+        // On fetch error (network error, etc.), stop unwrapping
         break;
       }
     } catch {
+      // Outer catch for timeout setup errors
       break;
     }
   }

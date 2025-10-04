@@ -3,31 +3,27 @@ const fs = require('fs');
 const path = require('path');
 
 const isWatch = process.argv.includes('--watch');
+const target = process.env.TARGET || 'firefox';
+
+console.log(`Building for target: ${target}`);
 
 // Ensure dist directory exists
-if (!fs.existsSync('dist')) {
-  fs.mkdirSync('dist', { recursive: true });
+const distDir = path.join('dist', target);
+if (!fs.existsSync(distDir)) {
+  fs.mkdirSync(distDir, { recursive: true });
 }
 
-// Copy static files
-const staticFiles = ['manifest.json', 'icons'];
-staticFiles.forEach(file => {
-  const src = path.join('src', file);
-  const dest = path.join('dist', file);
-
-  if (fs.existsSync(src)) {
-    if (fs.statSync(src).isDirectory()) {
-      fs.cpSync(src, dest, { recursive: true });
-    } else {
-      fs.copyFileSync(src, dest);
-    }
-  }
-});
+// Copy static files (icons)
+const iconsDir = path.join('src', 'icons');
+const destIconsDir = path.join(distDir, 'icons');
+if (fs.existsSync(iconsDir)) {
+  fs.cpSync(iconsDir, destIconsDir, { recursive: true });
+}
 
 // Copy HTML files
 const htmlFiles = [
-  { src: 'src/popup/popup.html', dest: 'dist/popup/popup.html' },
-  { src: 'src/options/options.html', dest: 'dist/options/options.html' },
+  { src: 'src/popup/popup.html', dest: path.join(distDir, 'popup/popup.html') },
+  { src: 'src/options/options.html', dest: path.join(distDir, 'options/options.html') },
 ];
 htmlFiles.forEach(({ src, dest }) => {
   if (fs.existsSync(src)) {
@@ -46,13 +42,16 @@ const buildOptions = {
     'src/options/options.ts'
   ],
   bundle: true,
-  outdir: 'dist',
+  outdir: distDir,
   format: 'esm',
   platform: 'browser',
-  target: 'firefox102',
+  target: target === 'safari' ? 'safari15' : target === 'chrome' ? 'chrome102' : 'firefox102',
   sourcemap: isWatch ? 'inline' : false,
   minify: !isWatch,
   logLevel: 'info',
+  define: {
+    '__TARGET__': JSON.stringify(target)
+  },
 };
 
 async function build() {
@@ -63,7 +62,7 @@ async function build() {
       console.log('Watching for changes...');
     } else {
       await esbuild.build(buildOptions);
-      console.log('Build complete');
+      console.log(`✓ Build complete for ${target}`);
     }
   } catch (error) {
     console.error('Build failed:', error);
