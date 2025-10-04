@@ -1,0 +1,26 @@
+{
+  "name": "abracademic",
+  "version": "1.0.0",
+  "description": "Scholarly URL rewriter for faster access via institutional proxies and open access sources",
+  "private": true,
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@types/webextension-polyfill": "^0.10.7",
+    "@vitest/ui": "^3.2.4",
+    "esbuild": "^0.20.0",
+    "happy-dom": "^19.0.2",
+    "typescript": "^5.3.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.10.0"
+  }
+}

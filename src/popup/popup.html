@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Abracademic</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      width: 320px;
+      padding: 16px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .method-selector {
+      margin-bottom: 16px;
+    }
+
+    .method-selector label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4A90E2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    button:hover {
+      background: #357ABD;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .secondary-btn {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .secondary-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .result {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f8f8f8;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .result h2 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .result-item {
+      margin-bottom: 6px;
+    }
+
+    .result-label {
+      font-weight: 500;
+      display: inline-block;
+      width: 80px;
+    }
+
+    .success {
+      background: #E8F5E9;
+      border-left: 3px solid #4CAF50;
+    }
+
+    .error {
+      background: #FFEBEE;
+      border-left: 3px solid #F44336;
+    }
+  </style>
+</head>
+<body>
+  <h1>Abracademic</h1>
+
+  <div class="method-selector">
+    <label for="method">Access method</label>
+    <select id="method">
+      <option value="unpaywall">Unpaywall</option>
+      <option value="openathens">OpenAthens</option>
+      <option value="ezproxy">EZProxy</option>
+      <option value="libkey">LibKey</option>
+      <option value="googlescholar">Google Scholar</option>
+      <option value="annasarchive">Anna's Archive</option>
+      <option value="direct">Direct</option>
+    </select>
+  </div>
+
+  <button id="process-btn">Process current page</button>
+  <button id="options-btn" class="secondary-btn">Settings</button>
+
+  <div id="last-result"></div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
