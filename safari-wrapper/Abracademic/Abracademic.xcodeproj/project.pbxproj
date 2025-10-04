@@ -94,6 +94,10 @@
 		44B57DA12E90E0950097FC5B /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../dist/safari/manifest.json; sourceTree = "<group>"; };
 		44B57DA22E90E0950097FC5B /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; name = background; path = ../../dist/safari/background; sourceTree = "<group>"; };
 		44B57DA32E90E0950097FC5B /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../dist/safari/icons; sourceTree = "<group>"; };
+		44B57DAC2E910D510097FC5B /* Abracademic (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Abracademic (iOS).entitlements"; sourceTree = "<group>"; };
+		44B57DAD2E910D700097FC5B /* Abracademic (macOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Abracademic (macOS).entitlements"; sourceTree = "<group>"; };
+		44B57DAE2E910D840097FC5B /* Abracademic Extension (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Abracademic Extension (iOS).entitlements"; sourceTree = "<group>"; };
+		44B57DAF2E910D930097FC5B /* Abracademic Extension (macOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Abracademic Extension (macOS).entitlements"; sourceTree = "<group>"; };
 		44D824932E90DF5F00F32F4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
 		44D824942E90DF5F00F32F4F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		44D824952E90DF5F00F32F4F /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
@@ -157,6 +161,10 @@
 		44D8248B2E90DF5F00F32F4F = {
 			isa = PBXGroup;
 			children = (
+				44B57DAF2E910D930097FC5B /* Abracademic Extension (macOS).entitlements */,
+				44B57DAE2E910D840097FC5B /* Abracademic Extension (iOS).entitlements */,
+				44B57DAD2E910D700097FC5B /* Abracademic (macOS).entitlements */,
+				44B57DAC2E910D510097FC5B /* Abracademic (iOS).entitlements */,
 				44B57D952E90E0890097FC5B /* background */,
 				44B57D962E90E0890097FC5B /* icons */,
 				44B57DA22E90E0950097FC5B /* background */,
@@ -656,8 +664,9 @@
 		44D824DE2E90DF5F00F32F4F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Abracademic Extension (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HK6R36PLNR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
@@ -690,8 +699,9 @@
 		44D824DF2E90DF5F00F32F4F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Abracademic Extension (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HK6R36PLNR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
@@ -727,8 +737,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Abracademic (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HK6R36PLNR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
@@ -768,8 +779,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Abracademic (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HK6R36PLNR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
@@ -808,8 +820,9 @@
 		44D824E52E90DF5F00F32F4F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Abracademic Extension (macOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HK6R36PLNR;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -831,6 +844,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornelius-bell.Abracademic.Extension";
 				PRODUCT_NAME = "Abracademic Extension";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -844,8 +858,9 @@
 		44D824E62E90DF5F00F32F4F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Abracademic Extension (macOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HK6R36PLNR;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -867,6 +882,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornelius-bell.Abracademic.Extension";
 				PRODUCT_NAME = "Abracademic Extension";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -882,8 +898,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Abracademic (macOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HK6R36PLNR;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -924,8 +941,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Abracademic (macOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HK6R36PLNR;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
