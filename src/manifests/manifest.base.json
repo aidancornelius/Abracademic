@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Abracademic",
   "description": "Scholarly URL rewriter for faster access via institutional proxies and open access sources",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
@@ -28,7 +28,8 @@
     "contextMenus"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "<all_urls>",
+    "https://api.unpaywall.org/*"
   ],
   "options_ui": {
     "page": "options/options.html",

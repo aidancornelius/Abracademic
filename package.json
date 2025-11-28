@@ -1,6 +1,6 @@
 {
   "name": "abracademic",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Scholarly URL rewriter for faster access via institutional proxies and open access sources",
   "private": true,
   "scripts": {

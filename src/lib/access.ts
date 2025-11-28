@@ -88,32 +88,77 @@ function routeViaLibKey(
 
 /**
  * Route via Unpaywall
+ *
+ * Queries the Unpaywall API to find open access versions of articles.
+ * Returns null if article is not available as open access.
  */
 async function routeViaUnpaywall(identifiers: Identifier[]): Promise<string | null> {
   const doi = identifiers.find(i => i.type === 'doi');
-  if (!doi) return null;
+  if (!doi) {
+    console.log('Unpaywall: No DOI found in identifiers');
+    return null;
+  }
 
   try {
     // Unpaywall API endpoint
-    const apiUrl = `https://api.unpaywall.org/v2/${encodeURIComponent(doi.normalized)}?email=extension@example.com`;
-    const response = await fetch(apiUrl, { method: 'GET' });
+    // Note: DOI should NOT be URL-encoded - the slash is part of the path structure
+    // Unpaywall expects: /v2/10.1038/s41586-021-03819-2 not /v2/10.1038%2Fs41586-021-03819-2
+    const apiUrl = `https://api.unpaywall.org/v2/${doi.normalized}?email=aidan@cornelius-bell.com`;
+    console.log('Unpaywall: Fetching', apiUrl);
 
-    if (response.ok) {
-      const data = await response.json();
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
 
-      // Check for best OA location
-      if (data.best_oa_location?.url_for_pdf) {
-        return data.best_oa_location.url_for_pdf;
-      }
-      if (data.best_oa_location?.url) {
-        return data.best_oa_location.url;
+    console.log('Unpaywall: Response status', response.status);
+
+    if (!response.ok) {
+      console.log('Unpaywall: API returned error status', response.status);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Unpaywall: is_oa =', data.is_oa, 'best_oa_location =', !!data.best_oa_location);
+
+    // Check if article is open access
+    if (!data.is_oa) {
+      console.log('Unpaywall: Article is not open access');
+      return null;
+    }
+
+    // Check for best OA location
+    if (data.best_oa_location?.url_for_pdf) {
+      console.log('Unpaywall: Found PDF URL');
+      return data.best_oa_location.url_for_pdf;
+    }
+    if (data.best_oa_location?.url) {
+      console.log('Unpaywall: Found landing page URL');
+      return data.best_oa_location.url;
+    }
+
+    // Try other OA locations if best_oa_location didn't have what we need
+    if (data.oa_locations && data.oa_locations.length > 0) {
+      for (const loc of data.oa_locations) {
+        if (loc.url_for_pdf) {
+          console.log('Unpaywall: Found PDF URL in oa_locations');
+          return loc.url_for_pdf;
+        }
+        if (loc.url) {
+          console.log('Unpaywall: Found URL in oa_locations');
+          return loc.url;
+        }
       }
     }
+
+    console.log('Unpaywall: No usable OA URL found');
+    return null;
   } catch (error) {
     console.error('Unpaywall API error:', error);
+    return null;
   }
-
-  return null;
 }
 
 /**
