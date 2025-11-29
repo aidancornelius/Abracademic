@@ -1,0 +1,250 @@
+name: Abracademic
+options:
+  bundleIdPrefix: com.cornelius-bell
+  deploymentTarget:
+    iOS: "15.0"
+    macOS: "10.14"
+  developmentLanguage: en
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: HK6R36PLNR
+    MARKETING_VERSION: "1.0.5"
+    CURRENT_PROJECT_VERSION: "2"
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.0"
+    CLANG_CXX_LANGUAGE_STANDARD: gnu++20
+    GCC_C_LANGUAGE_STANDARD: gnu17
+    CLANG_ENABLE_MODULES: YES
+    CLANG_ENABLE_OBJC_ARC: YES
+    CLANG_ENABLE_OBJC_WEAK: YES
+    ENABLE_STRICT_OBJC_MSGSEND: YES
+    GCC_NO_COMMON_BLOCKS: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    MTL_FAST_MATH: YES
+    STRING_CATALOG_GENERATE_SYMBOLS: YES
+    SWIFT_APPROACHABLE_CONCURRENCY: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+    SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY: YES
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+  configs:
+    Debug:
+      DEBUG_INFORMATION_FORMAT: dwarf
+      ENABLE_TESTABILITY: YES
+      GCC_DYNAMIC_NO_PIC: NO
+      GCC_OPTIMIZATION_LEVEL: "0"
+      GCC_PREPROCESSOR_DEFINITIONS:
+        - DEBUG=1
+        - $(inherited)
+      MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
+      ONLY_ACTIVE_ARCH: YES
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS:
+        - DEBUG
+        - $(inherited)
+      SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+    Release:
+      DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+      ENABLE_NS_ASSERTIONS: NO
+      MTL_ENABLE_DEBUG_INFO: NO
+      SWIFT_COMPILATION_MODE: wholemodule
+
+fileGroups:
+  - "Shared (App)"
+  - "Shared (Extension)"
+  - "iOS (App)"
+  - "iOS (Extension)"
+  - "macOS (App)"
+  - "macOS (Extension)"
+
+targets:
+  Abracademic (iOS):
+    type: application
+    platform: iOS
+    sources:
+      - path: "iOS (App)"
+        excludes:
+          - Info.plist
+      - path: "Shared (App)"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cornelius-bell.Abracademic
+        PRODUCT_NAME: Abracademic
+        INFOPLIST_FILE: "iOS (App)/Info.plist"
+        CODE_SIGN_ENTITLEMENTS: "Abracademic (iOS).entitlements"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+        LD_RUNPATH_SEARCH_PATHS:
+          - $(inherited)
+          - "@executable_path/Frameworks"
+        OTHER_LDFLAGS:
+          - -framework
+          - SafariServices
+          - -framework
+          - WebKit
+        TARGETED_DEVICE_FAMILY: "1,2"
+    info:
+      path: "iOS (App)/Info.plist"
+      properties:
+        ITSAppUsesNonExemptEncryption: false
+        CFBundleDisplayName: Abracademic
+        UIApplicationSupportsIndirectInputEvents: true
+        UILaunchStoryboardName: LaunchScreen
+        UIMainStoryboardFile: Main
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    dependencies:
+      - target: "Abracademic Extension (iOS)"
+        embed: true
+        codeSign: true
+        copyPhase:
+          destination: plugins
+
+  Abracademic (macOS):
+    type: application
+    platform: macOS
+    sources:
+      - path: "macOS (App)"
+        excludes:
+          - Info.plist
+      - path: "Shared (App)"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cornelius-bell.Abracademic
+        PRODUCT_NAME: Abracademic
+        INFOPLIST_FILE: "macOS (App)/Info.plist"
+        CODE_SIGN_ENTITLEMENTS: "Abracademic (macOS).entitlements"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ENABLE_APP_SANDBOX: YES
+        ENABLE_HARDENED_RUNTIME: YES
+        ENABLE_OUTGOING_NETWORK_CONNECTIONS: YES
+        ENABLE_USER_SELECTED_FILES: readonly
+        REGISTER_APP_GROUPS: YES
+        SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+        LD_RUNPATH_SEARCH_PATHS:
+          - $(inherited)
+          - "@executable_path/../Frameworks"
+        OTHER_LDFLAGS:
+          - -framework
+          - SafariServices
+          - -framework
+          - WebKit
+    info:
+      path: "macOS (App)/Info.plist"
+      properties:
+        ITSAppUsesNonExemptEncryption: false
+        CFBundleDisplayName: Abracademic
+        NSMainStoryboardFile: Main
+        NSPrincipalClass: NSApplication
+        LSApplicationCategoryType: public.app-category.education
+    dependencies:
+      - target: "Abracademic Extension (macOS)"
+        embed: true
+        codeSign: true
+        copyPhase:
+          destination: plugins
+
+  Abracademic Extension (iOS):
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: "iOS (Extension)"
+        excludes:
+          - Info.plist
+      - path: "Shared (Extension)/SafariWebExtensionHandler.swift"
+      - path: "../../dist/safari/background"
+        type: folder
+        buildPhase: resources
+      - path: "../../dist/safari/icons"
+        type: folder
+        buildPhase: resources
+      - path: "../../dist/safari/options"
+        type: folder
+        buildPhase: resources
+      - path: "../../dist/safari/popup"
+        type: folder
+        buildPhase: resources
+      - path: "../../dist/safari/manifest.json"
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cornelius-bell.Abracademic.Extension
+        PRODUCT_NAME: Abracademic Extension
+        INFOPLIST_FILE: "iOS (Extension)/Info.plist"
+        CODE_SIGN_ENTITLEMENTS: "Abracademic Extension (iOS).entitlements"
+        SKIP_INSTALL: YES
+        LD_RUNPATH_SEARCH_PATHS:
+          - $(inherited)
+          - "@executable_path/Frameworks"
+          - "@executable_path/../../Frameworks"
+        OTHER_LDFLAGS:
+          - -framework
+          - SafariServices
+    info:
+      path: "iOS (Extension)/Info.plist"
+      properties:
+        CFBundleDisplayName: Abracademic Extension
+        NSHumanReadableCopyright: ""
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.Safari.web-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).SafariWebExtensionHandler
+
+  Abracademic Extension (macOS):
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: "macOS (Extension)"
+        excludes:
+          - Info.plist
+      - path: "Shared (Extension)/SafariWebExtensionHandler.swift"
+      - path: "../../dist/safari/background"
+        type: folder
+        buildPhase: resources
+      - path: "../../dist/safari/icons"
+        type: folder
+        buildPhase: resources
+      - path: "../../dist/safari/options"
+        type: folder
+        buildPhase: resources
+      - path: "../../dist/safari/popup"
+        type: folder
+        buildPhase: resources
+      - path: "../../dist/safari/manifest.json"
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cornelius-bell.Abracademic.Extension
+        PRODUCT_NAME: Abracademic Extension
+        INFOPLIST_FILE: "macOS (Extension)/Info.plist"
+        CODE_SIGN_ENTITLEMENTS: "Abracademic Extension (macOS).entitlements"
+        ENABLE_APP_SANDBOX: YES
+        ENABLE_HARDENED_RUNTIME: YES
+        ENABLE_USER_SELECTED_FILES: readonly
+        REGISTER_APP_GROUPS: YES
+        SKIP_INSTALL: YES
+        LD_RUNPATH_SEARCH_PATHS:
+          - $(inherited)
+          - "@executable_path/../Frameworks"
+          - "@executable_path/../../../../Frameworks"
+        OTHER_LDFLAGS:
+          - -framework
+          - SafariServices
+    info:
+      path: "macOS (Extension)/Info.plist"
+      properties:
+        CFBundleDisplayName: Abracademic Extension
+        NSHumanReadableCopyright: ""
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.Safari.web-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).SafariWebExtensionHandler
