@@ -11,24 +11,31 @@
       padding: 0;
     }
 
-    html, body {
-      width: 320px;
-    }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 14px;
-      padding: 16px;
+      font-size: 16px;
       color: #333;
+      padding: 16px;
     }
 
-    /* Mobile - full width, larger text */
-    @media (max-width: 399px) {
-      html, body {
-        width: 100%;
+    .popup-content {
+      width: 100%;
+    }
+
+    /* Desktop spacer - forces Safari to size popup correctly */
+    /* pointer: fine = mouse/trackpad (desktop), coarse = touch (mobile) */
+    .desktop-spacer {
+      display: none;
+    }
+
+    @media (pointer: fine) {
+      .desktop-spacer {
+        display: block;
+        width: 348px;
+        height: 0;
       }
       body {
-        font-size: 16px;
+        font-size: 14px;
       }
     }
 
@@ -50,7 +57,7 @@
 
     select {
       width: 100%;
-      padding: 8px;
+      padding: 12px;
       border: 1px solid #ddd;
       border-radius: 4px;
       font-size: 16px; /* iOS zoom prevention */
@@ -63,21 +70,21 @@
       padding-right: 32px;
     }
 
-    @media (max-width: 399px) {
+    @media (min-width: 400px) {
       select {
-        padding: 12px;
-        padding-right: 36px;
+        padding: 8px;
+        padding-right: 32px;
       }
     }
 
     button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background: #F9B419;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 500;
       cursor: pointer;
       margin-bottom: 8px;
@@ -85,10 +92,10 @@
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
     }
 
-    @media (max-width: 399px) {
+    @media (min-width: 400px) {
       button {
-        padding: 14px;
-        font-size: 17px;
+        padding: 12px;
+        font-size: 16px;
       }
     }
 
@@ -146,25 +153,28 @@
   </style>
 </head>
 <body>
-  <h1>Abracademic</h1>
+  <div class="desktop-spacer"></div>
+  <div class="popup-content">
+    <h1>Abracademic</h1>
 
-  <div class="method-selector">
-    <label for="method">Access method</label>
-    <select id="method">
-      <option value="unpaywall">Unpaywall</option>
-      <option value="openathens">OpenAthens</option>
-      <option value="ezproxy">EZProxy</option>
-      <option value="libkey">LibKey</option>
-      <option value="googlescholar">Google Scholar</option>
-      <option value="annasarchive">Anna's Archive</option>
-      <option value="direct">Direct</option>
-    </select>
+    <div class="method-selector">
+      <label for="method">Access method</label>
+      <select id="method">
+        <option value="unpaywall">Unpaywall</option>
+        <option value="openathens">OpenAthens</option>
+        <option value="ezproxy">EZProxy</option>
+        <option value="libkey">LibKey</option>
+        <option value="googlescholar">Google Scholar</option>
+        <option value="annasarchive">Anna's Archive</option>
+        <option value="direct">Direct</option>
+      </select>
+    </div>
+
+    <button id="process-btn">Process current page</button>
+    <button id="options-btn" class="secondary-btn">Settings</button>
+
+    <div id="last-result"></div>
   </div>
-
-  <button id="process-btn">Process current page</button>
-  <button id="options-btn" class="secondary-btn">Settings</button>
-
-  <div id="last-result"></div>
 
   <script type="module" src="popup.js"></script>
 </body>

@@ -23,7 +23,7 @@ The extension also unwraps shortened URLs and normalises publisher URLs before p
 Download from:
 - [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/abracademic/)
 - [Chrome Web Store](https://chrome.google.com/webstore/detail/obemiipnpkloaopkdnifingonkncckdd)
-- [TestFlight (iOS)](https://testflight.apple.com/join/G9bjF1hh)
+- [Safari App Store](https://apps.apple.com/us/app/abracademic/id6753616245)
 - [GitHub (tags)](https://github.com/aidancornelius/Abracademic/releases)
 
 Or build from source.

@@ -12,8 +12,8 @@ options:
 settings:
   base:
     DEVELOPMENT_TEAM: HK6R36PLNR
-    MARKETING_VERSION: "1.0.5"
-    CURRENT_PROJECT_VERSION: "2"
+    MARKETING_VERSION: "1.0.8"
+    CURRENT_PROJECT_VERSION: "252"
     CODE_SIGN_STYLE: Automatic
     SWIFT_VERSION: "5.0"
     CLANG_CXX_LANGUAGE_STANDARD: gnu++20
@@ -93,7 +93,6 @@ targets:
         CFBundleDisplayName: Abracademic
         UIApplicationSupportsIndirectInputEvents: true
         UILaunchStoryboardName: LaunchScreen
-        UIMainStoryboardFile: Main
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationLandscapeLeft
@@ -103,6 +102,13 @@ targets:
           - UIInterfaceOrientationPortraitUpsideDown
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+                UISceneStoryboardFile: Main
     dependencies:
       - target: "Abracademic Extension (iOS)"
         embed: true
